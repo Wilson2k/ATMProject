@@ -375,6 +375,10 @@ void login(){
                     break;
                 }
             }
+            else if(atmData.peek() == EOF){
+                cout << "Wrong username or password!" << endl;
+                break;
+            }
         }
         atmData.close();
     }
