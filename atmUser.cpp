@@ -33,8 +33,9 @@ atmUser::atmUser(std::string NAME, int PIN, float DBALANCE, float CBALANCE, int 
 };
 
 atmUser::atmUser(const atmUser &obj){
-    atmUser_Name = "Clone of " + obj.atmUser_Name;
+    atmUser_Name = obj.atmUser_Name;
     atmUser_PIN = obj.atmUser_PIN;
+    atmUser_ID = obj.atmUser_ID;
     atmUser_DBalance = obj.atmUser_DBalance;
     atmUser_CBalance = obj.atmUser_CBalance;
 };

@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <stdio.h>
 #include "atmUser.hpp"
 using namespace std;
 
@@ -20,6 +21,7 @@ void displayMainmenu(){ // Display the main menu after login/creating account
     cout << "[3] Check Balance" << endl;
     cout << "[4] Transfer or make payments" << endl;
     cout << "[5] Other Options" << endl;
+    cout << "[6] Quit" << endl;
 }
 
 void displayWithdrawmenu(){ //Display withdraw menu when user chooses (1) Withdraw
@@ -51,200 +53,258 @@ void displayNearby(){ // Displays nearby locations for [5] Other options
     cout << "BANK OF AMERICA ATM San Francisco Peninsula, San Francisco, CA 94128 - 7.7 Miles away" << endl;
 }
 
+void writeReceipt(){ // Call to ask user if they want receipt, and write receipt
+    string line, receiptChoice;
+    cout << "Would you like a receipt? (Y/N)" << endl;
+    cin >> receiptChoice;
+    while(!(receiptChoice == "Y" || receiptChoice == "y" || receiptChoice == "N" || receiptChoice == "n")){
+        cout << "Please choose an option." << endl;
+        cin >> receiptChoice;
+    }
+    if(receiptChoice == "Y" || receiptChoice == "y"){
+        ifstream writeReceipt("atmReceipt.txt");
+        if(writeReceipt.is_open()){
+            while(getline(writeReceipt, line)){
+                cout << line << endl;
+            }
+        }
+    }
+    else{
+        cout << "Thank you, have a good day." << endl;
+    }
+}
+
+void saveData(atmUser currentUser){ // Updates stored data
+    ifstream readData("atmData.txt");
+    ofstream saveData("temp.txt");
+    if (readData.is_open())
+    {
+        int counter = 1;
+        string line;
+        while (getline(readData, line)){
+            if(counter == currentUser.getID()){
+                saveData << currentUser.getName() << "|" << currentUser.getPIN() << " " << currentUser.getDebitBalance() << " " << currentUser.getCreditBalance() << " " << currentUser.getID() << endl;
+                counter++;
+            }
+            else{
+                saveData << line << endl;
+                counter++;
+            }
+        }
+        readData.close();
+    }
+    remove("atmData.txt");
+    rename("temp.txt","atmData.txt");
+}
+
 void mainMenu(atmUser currentUser){
     int userChoice, withdrawChoice;
     char userResponse = 'Y';
     float transactionAmount = 0;
+    string addChoice;
     displayMainmenu();
     cin >> userChoice;
-    while(not(userChoice > 0 && userChoice < 6)){
+    while(not(userChoice > 0 && userChoice < 7)){
         cout << "Please choose an option" << endl;
         cin >> userChoice;
     }
-    while(userResponse == 'Y' || userResponse == 'y'){
-        switch (userChoice) {
-            case 1: // (1) Withdraw option
-                displayWithdrawmenu();
-                cin >> withdrawChoice;
-                switch (withdrawChoice) {
-                    case 1:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 20);
-                        }
-                        break;
-                    case 2:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 40);
-                        }
-                        break;
-                    case 3:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 60);
-                        }
-                        break;
-                    case 4:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 80);
-                        }
-                        break;
-                    case 5:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 100);
-                        }
-                        break;
-                    case 6:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 200);
-                        }
-                        break;
-                    case 7:
-                        if(20 > currentUser.getDebitBalance()){
-                             cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - 300);
-                        }
-                        break;
-                    case 8:
-                        cout << "Enter an amount to withdraw." << endl;
-                        cin >> transactionAmount;
-                        if(transactionAmount > currentUser.getDebitBalance()){
-                            cout << "Not enough money to withdraw." << endl;
-                        }
-                        else{
-                            currentUser.setDebitBalance(currentUser.getDebitBalance() - transactionAmount);
-                        }
-                        break;
-                    default:
-                        while(not(withdrawChoice > 0 && withdrawChoice < 9)){
-                            cout << "Please choose an option" << endl;
-                            cin >> withdrawChoice;
-                        }
-                }
-                cout << "Would you like another transaction? (Y/N)" << endl;
-                cin >> userResponse;
-                while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
-                    cout << "Please choose an option." << endl;
-                    cin >> userResponse;
-                }
-                if(userResponse == 'Y' || userResponse == 'y'){
-                    displayMainmenu();
-                    cin >> userChoice;
-                }
-                break;
-            case 2: // (2) Deposit option
-                cout << "Enter an amount to deposit: ";
-                cin >> transactionAmount;
-                currentUser.setDebitBalance(currentUser.getDebitBalance() + transactionAmount);
-                cout << "Would you like another transaction? (Y/N)" << endl;
-                cin >> userResponse;
-                while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
-                    cout << "Please choose an option." << endl;
-                    cin >> userResponse;
-                }
-                if(userResponse == 'Y' || userResponse == 'y'){
-                    displayMainmenu();
-                    cin >> userChoice;
-                }
-                break;
-            case 3: // (3) Check Balance
-                cout << "Your current balance is: " << "$" << currentUser.getDebitBalance() << endl;
-                cout << "Would you like another transaction? (Y/N)" << endl;
-                cin >> userResponse;
-                while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
-                    cout << "Please choose an option." << endl;
-                    cin >> userResponse;
-                }
-                if(userResponse == 'Y' || userResponse == 'y'){
-                    displayMainmenu();
-                    cin >> userChoice;
-                }
-                break;
-            case 4: // (4) Transfer or make payments
-                
-
-                cout << "Would you like another transaction? (Y/N)" << endl;
-                cin >> userResponse;
-                while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
-                    cout << "Please choose an option." << endl;
-                    cin >> userResponse;
-                }
-                if(userResponse == 'Y' || userResponse == 'y'){
-                    displayMainmenu();
-                    cin >> userChoice;
-                }
-                break;
-            case 5: // (5) Other Options
-                additonalOptiions();
-                string addChoice = "0";
-                getline(cin, addChoice);
-                while(!(addChoice == "1" || addChoice == "2")){
-                    cout << "Please enter a valid option: ";
-                    cin >> addChoice;
-                }
-                if(addChoice == "1"){
-                    int newPIN;
-                    cout << "Choose a new PIN" << endl;
-                    cin >> newPIN;
-                    while(newPIN > 9999 || newPIN <= 999){
-                        cout << "Invalid pin." << endl;
-                        cout << "Create your pin: ";
-                        cin >> newPIN;
+    ifstream atmReceipt ("atmReceipt.txt", ios::trunc);
+    atmReceipt.close();
+    ofstream storeReceipt ("atmReceipt.txt");
+    if(storeReceipt.is_open()){
+        storeReceipt << "Name: " << currentUser.getName() << endl;
+        while(userResponse == 'Y' || userResponse == 'y'){
+            switch (userChoice) {
+                case 1: // (1) Withdraw option
+                    displayWithdrawmenu();
+                    cin >> withdrawChoice;
+                    switch (withdrawChoice) {
+                        case 1:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 20);
+                                storeReceipt << "Withdraw: $20" << endl;
+                            }
+                            break;
+                        case 2:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 40);
+                                storeReceipt << "Withdraw: $40" << endl;
+                            }
+                            break;
+                        case 3:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 60);
+                                storeReceipt << "Withdraw: $60" << endl;
+                            }
+                            break;
+                        case 4:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 80);
+                                storeReceipt << "Withdraw: $80" << endl;
+                            }
+                            break;
+                        case 5:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 100);
+                                storeReceipt << "Withdraw: $100" << endl;
+                            }
+                            break;
+                        case 6:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 200);
+                                storeReceipt << "Withdraw: $200" << endl;
+                            }
+                            break;
+                        case 7:
+                            if(20 > currentUser.getDebitBalance()){
+                                 cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - 300);
+                                storeReceipt << "Withdraw: $300" << endl;
+                            }
+                            break;
+                        case 8:
+                            cout << "Enter an amount to withdraw." << endl;
+                            cin >> transactionAmount;
+                            if(transactionAmount > currentUser.getDebitBalance()){
+                                cout << "Not enough money to withdraw." << endl;
+                            }
+                            else{
+                                currentUser.setDebitBalance(currentUser.getDebitBalance() - transactionAmount);
+                                storeReceipt << "Withdraw: $" << transactionAmount << endl;
+                            }
+                            break;
+                        default:
+                            while(not(withdrawChoice > 0 && withdrawChoice < 9)){
+                                cout << "Please choose an option" << endl;
+                                cin >> withdrawChoice;
+                            }
                     }
-                    currentUser.setPIN(newPIN);
-                    cout << "New PIN: " << currentUser.getPIN() << endl;
-                }
-                else if(addChoice == "2"){
-                    displayNearby();
-                }
-                cout << "Would you like another transaction? (Y/N)" << endl;
-                cin >> userResponse;
-                while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
-                    cout << "Please choose an option." << endl;
+                    cout << "Would you like another transaction? (Y/N)" << endl;
                     cin >> userResponse;
-                }
-                if(userResponse == 'Y' || userResponse == 'y'){
-                    displayMainmenu();
-                    cin >> userChoice;
-                }
-                break;
+                    while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
+                        cout << "Please choose an option." << endl;
+                        cin >> userResponse;
+                    }
+                    if(userResponse == 'Y' || userResponse == 'y'){
+                        displayMainmenu();
+                        cin >> userChoice;
+                    }
+                    break;
+                case 2: // (2) Deposit option
+                    cout << "Enter an amount to deposit: ";
+                    cin >> transactionAmount;
+                    while(transactionAmount < 0){
+                        cout << "Please deposit a valid amount." << endl;
+                        cin >> transactionAmount;
+                    }
+                    currentUser.setDebitBalance(currentUser.getDebitBalance() + transactionAmount);
+                    storeReceipt << "Deposit: $" << transactionAmount << endl;
+                    cout << "Would you like another transaction? (Y/N)" << endl;
+                    cin >> userResponse;
+                    while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
+                        cout << "Please choose an option." << endl;
+                        cin >> userResponse;
+                    }
+                    if(userResponse == 'Y' || userResponse == 'y'){
+                        displayMainmenu();
+                        cin >> userChoice;
+                    }
+                    break;
+                case 3: // (3) Check Balance
+                    cout << "Your current balance is: " << "$" << currentUser.getDebitBalance() << endl;
+                    cout << "Would you like another transaction? (Y/N)" << endl;
+                    cin >> userResponse;
+                    while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
+                        cout << "Please choose an option." << endl;
+                        cin >> userResponse;
+                    }
+                    if(userResponse == 'Y' || userResponse == 'y'){
+                        displayMainmenu();
+                        cin >> userChoice;
+                    }
+                    break;
+                case 4: // (4) Transfer or make payments
+                    
+
+                    cout << "Would you like another transaction? (Y/N)" << endl;
+                    cin >> userResponse;
+                    while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
+                        cout << "Please choose an option." << endl;
+                        cin >> userResponse;
+                    }
+                    if(userResponse == 'Y' || userResponse == 'y'){
+                        displayMainmenu();
+                        cin >> userChoice;
+                    }
+                    break;
+                case 5: // (5) Other Options
+                    additonalOptiions();
+                    addChoice = "0";
+                    getline(cin, addChoice);
+                    while(!(addChoice == "1" || addChoice == "2")){
+                        cout << "Please enter a valid option: ";
+                        cin >> addChoice;
+                    }
+                    if(addChoice == "1"){
+                        int newPIN;
+                        cout << "Choose a new PIN" << endl;
+                        cin >> newPIN;
+                        while(newPIN > 9999 || newPIN <= 999){
+                            cout << "Invalid pin." << endl;
+                            cout << "Create your pin: ";
+                            cin >> newPIN;
+                        }
+                        currentUser.setPIN(newPIN);
+                        cout << "New PIN: " << currentUser.getPIN() << endl;
+                    }
+                    else if(addChoice == "2"){
+                        displayNearby();
+                    }
+                    cout << "Would you like another transaction? (Y/N)" << endl;
+                    cin >> userResponse;
+                    while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
+                        cout << "Please choose an option." << endl;
+                        cin >> userResponse;
+                    }
+                    if(userResponse == 'Y' || userResponse == 'y'){
+                        displayMainmenu();
+                        cin >> userChoice;
+                    }
+                    break;
+                case 6:
+                    cout << "Thank you, have a good day." << endl;
+                    userResponse = '0';
+                    break;
+            }
         }
+        storeReceipt << "Current Balance: $" << currentUser.getDebitBalance() << endl;
+        storeReceipt.close();
+        if(userResponse != 0){
+            writeReceipt();
+        }
+        saveData(currentUser);
     }
 }
-
-//void saveData(atmUser currentUser){
-//    ofstream outFile("temp.txt");
-//    ifstream readFile("atmData.txt");
-//    string readout;
-//    string search;
-//    string replace;
-//    while(getline(readFile,readout)){
-//      if(readout == search){
-//        outFile << replace;
-//      }
-//      else {
-//        outFile << readout;
-//      }
-//    }
-//}
 
 void registerUser(){ //Creating a new user account
     string newUser_Name;
@@ -269,12 +329,12 @@ void registerUser(){ //Creating a new user account
         atmData.close();
     }
     atmUser newUser(newUser_Name, newUser_PIN, 0.0, 0.0, userCount);
-    ofstream storedata ("atmData.txt", ios::app);
-    if(storedata.is_open()){
-        storedata << newUser.getName() << "|" << newUser.getPIN() << " " << newUser.getDebitBalance() << " " << newUser.getCreditBalance() << " " << newUser.getID() << endl;
-        storedata.close();
+    ofstream storeData ("atmData.txt", ios::app);
+    if(storeData.is_open()){
+        storeData << newUser.getName() << "|" << newUser.getPIN() << " " << newUser.getDebitBalance() << " " << newUser.getCreditBalance() << " " << newUser.getID() << endl;
+        storeData.close();
     }
-};
+}
 
 void login(){
     string userName, storedName, line;
@@ -313,8 +373,9 @@ void startMenu(){
     cout << "What do you want to do?" << endl;
     cout << "[1] Login" << endl;
     cout << "[2] Register" << endl;
+    cout << "[3] Quit" << endl;
     getline(cin, startChoice);
-    while(startChoice > "2" || startChoice < "1"){
+    while(startChoice > "3" || startChoice < "1"){
         cout << "Please choose a valid choice." << endl;
         getline(cin, startChoice);
     }
@@ -323,6 +384,11 @@ void startMenu(){
     }
     if(startChoice == "2"){
         registerUser();
+        cin.ignore();
+        startMenu();
+    }
+    if(startChoice == "3"){
+        cout << "Thank you, have a good day." << endl;
     }
 }
 
