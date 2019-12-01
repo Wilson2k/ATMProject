@@ -522,6 +522,7 @@ void mainMenu(atmUser currentUser){
                                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transferAmount);
                                     currentUser.setSavingBalance(currentUser.getSavingBalance() + transferAmount);
                                     cout << "You successfully transferred  $" << transferAmount << " from checking to savings." << endl;
+                                    storeReceipt << "Transfer from checkings to savings: $"  << transferAmount << endl;
                                 }
                                 else{
                                     cout << "Invalid transfer amount." << endl;
@@ -569,6 +570,7 @@ void mainMenu(atmUser currentUser){
                                     currentUser.setSavingBalance(currentUser.getSavingBalance() - transferAmount);
                                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() + transferAmount);
                                     cout << "You successfully transferred  $" << transferAmount << " from savings to checking." << endl;
+                                    storeReceipt << "Transfer from savings to checkings: $"  << transferAmount << endl;
                                 }
                                 else{
                                     cout << "Invalid transfer amount." << endl;
