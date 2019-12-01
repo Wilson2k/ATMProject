@@ -238,7 +238,6 @@ void mainMenu(atmUser currentUser){
     char withdrawChoice = '0';
     char accountChoice = '0';
     char transferOrPayment = '0';
-    char transferChoice = '0';
     float transactionAmount = 0;
     string transferRecipient = "";
     int transferID = 0;
