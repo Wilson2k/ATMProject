@@ -506,102 +506,81 @@ void mainMenu(atmUser currentUser){
                     cin >> accountChoice;
                     accountChoice = checkAccountChoice(accountChoice);
                     if(accountChoice == '1'){
-                        cout << "[1] Transfer money" << endl;
+                        cout << "[1] Transfer money to savings" << endl;
                         cout << "[2] Make Payments" << endl;
                         cin >> transferOrPayment;
                         transferOrPayment = checkTransferChoice(transferOrPayment);
                         if(transferOrPayment == '1'){
-                            cout << "[1] Transfer to savings" << endl;
-                            cout << "[2] Transfer to others" << endl;
-                            cin >>  transferChoice;
-                            transferChoice = checkTransferChoice(transferChoice);
-                            if(transferChoice == '1'){
+                            cout << "Enter transfer amount: ";
+                            cin >>  transferAmount;
+                            if(transferAmount <= currentUser.getCheckingBalance() && transferAmount > 0){
+                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transferAmount);
+                                currentUser.setSavingBalance(currentUser.getSavingBalance() + transferAmount);
+                                cout << "You successfully transferred $" << transferAmount << " from checking to savings." << endl;
+                                storeReceipt << "Transfer from checkings to savings: $"  << transferAmount << endl;
+                            }
+                            else{
+                                cout << "Invalid transfer amount." << endl;
+                            }
+                        }
+                        else if(transferOrPayment == '2'){
+                            cout << "Enter name of transfer recipient: ";
+                            cin.ignore();
+                            getline(cin, transferRecipient);
+                            cout << "Enter recipient ID: ";
+                            cin >> transferID;
+                            if(userExist(transferRecipient, transferID)){
                                 cout << "Enter transfer amount: ";
-                                cin >>  transferAmount;
+                                cin >> transferAmount;
                                 if(transferAmount <= currentUser.getCheckingBalance() && transferAmount > 0){
-                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transferAmount);
-                                    currentUser.setSavingBalance(currentUser.getSavingBalance() + transferAmount);
-                                    cout << "You successfully transferred $" << transferAmount << " from checking to savings." << endl;
-                                    storeReceipt << "Transfer from checkings to savings: $"  << transferAmount << endl;
+                                    atmUser transferUser(getUser(transferRecipient, transferID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
+                                    transferMoney(currentUser, transferUser , transferAmount, accountChoice);
+                                    storeReceipt << "Transfer to " << transferUser.getName() << " from checking: $" << transferAmount << endl;
                                 }
                                 else{
                                     cout << "Invalid transfer amount." << endl;
                                 }
-                                
                             }
-                            else if(transferChoice == '2'){
-                                cout << "Enter name of transfer recipient: ";
-                                cin.ignore();
-                                getline(cin, transferRecipient);
-                                cout << "Enter recipient ID: ";
-                                cin >> transferID;
-                                if(userExist(transferRecipient, transferID)){
-                                    cout << "Enter transfer amount: ";
-                                    cin >> transferAmount;
-                                    if(transferAmount <= currentUser.getCheckingBalance() && transferAmount > 0){
-                                        atmUser transferUser(getUser(transferRecipient, transferID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
-                                        transferMoney(currentUser, transferUser , transferAmount, accountChoice);
-                                        storeReceipt << "Transfer to " << transferUser.getName() << " from checking: $" << transferAmount << endl;
-                                    }
-                                    else{
-                                        cout << "Invalid transfer amount." << endl;
-                                    }
-                                }
-                            }
-                        }
-                        else if(transferOrPayment == '2'){
-                            
                         }
                     }
                     else if(accountChoice == '2'){
-                        cout << "[1] Transfer money" << endl;
+                        cout << "[1] Transfer money to checkings" << endl;
                         cout << "[2] Make Payments" << endl;
                         cin >> transferOrPayment;
                         transferOrPayment = checkTransferChoice(transferOrPayment);
                         if(transferOrPayment == '1'){
-                            cout << "[1] Transfer to checking" << endl;
-                            cout << "[2] Transfer to others" << endl;
-                            cin >>  transferChoice;
-                            transferChoice = checkTransferChoice(transferChoice);
-                            if(transferChoice == '1'){
+                            cout << "Enter transfer amount: ";
+                            cin >>  transferAmount;
+                            if(transferAmount <= currentUser.getSavingBalance() && transferAmount > 0){
+                                currentUser.setSavingBalance(currentUser.getSavingBalance() - transferAmount);
+                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() + transferAmount);
+                                cout << "You successfully transferred $" << transferAmount << " from savings to checking." << endl;
+                                storeReceipt << "Transfer from savings to checkings: $"  << transferAmount << endl;
+                            }
+                            else{
+                                cout << "Invalid transfer amount." << endl;
+                            }
+                        }
+                        else if(transferOrPayment == '2'){
+                            cout << "Enter name of transfer recipient: ";
+                            cin.ignore();
+                            getline(cin, transferRecipient);
+                            cout << "Enter recipient ID: ";
+                            cin >> transferID;
+                            if(userExist(transferRecipient, transferID)){
                                 cout << "Enter transfer amount: ";
-                                cin >>  transferAmount;
+                                cin >> transferAmount;
                                 if(transferAmount <= currentUser.getSavingBalance() && transferAmount > 0){
-                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - transferAmount);
-                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() + transferAmount);
-                                    cout << "You successfully transferred $" << transferAmount << " from savings to checking." << endl;
-                                    storeReceipt << "Transfer from savings to checkings: $"  << transferAmount << endl;
+                                    atmUser transferUser(getUser(transferRecipient, transferID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
+                                    transferMoney(currentUser, transferUser , transferAmount, accountChoice);
+                                    storeReceipt << "Transfer to " << transferUser.getName() << " from saving: $" << transferAmount << endl;
                                 }
                                 else{
                                     cout << "Invalid transfer amount." << endl;
                                 }
-                                
                             }
-                            else if(transferChoice == '2'){
-                                cout << "Enter name of transfer recipient: ";
-                                cin.ignore();
-                                getline(cin, transferRecipient);
-                                cout << "Enter recipient ID: ";
-                                cin >> transferID;
-                                if(userExist(transferRecipient, transferID)){
-                                    cout << "Enter transfer amount: ";
-                                    cin >> transferAmount;
-                                    if(transferAmount <= currentUser.getSavingBalance() && transferAmount > 0){
-                                        atmUser transferUser(getUser(transferRecipient, transferID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
-                                        transferMoney(currentUser, transferUser , transferAmount, accountChoice);
-                                        storeReceipt << "Transfer to " << transferUser.getName() << " from saving: $" << transferAmount << endl;
-                                    }
-                                    else{
-                                        cout << "Invalid transfer amount." << endl;
-                                    }
-                                }
-                            }
-                        }
-                        else if(transferOrPayment == '2'){
-                            
                         }
                     }
-                    
                     cout << "Would you like another transaction? (Y/N)" << endl;
                     cin >> userResponse;
                     userResponse = checkUserResponse(userResponse);
