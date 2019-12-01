@@ -17,17 +17,17 @@ atmUser::atmUser(std::string NAME){
 atmUser::atmUser(std::string NAME, int PIN){
     atmUser(NAME, PIN, 0.0, 0.0, 0);
 };
-atmUser::atmUser(std::string NAME, int PIN, float DBALANCE){
-    atmUser(NAME, PIN, DBALANCE, 0.0, 0);
+atmUser::atmUser(std::string NAME, int PIN, float CBALANCE){
+    atmUser(NAME, PIN, CBALANCE, 0.0, 0);
 };
-atmUser::atmUser(std::string NAME, int PIN, float DBALANCE, float CBALANCE){
-    atmUser(NAME, PIN, DBALANCE, CBALANCE, 0);
+atmUser::atmUser(std::string NAME, int PIN, float CBALANCE, float SBALANCE){
+    atmUser(NAME, PIN, CBALANCE, SBALANCE, 0);
 };
-atmUser::atmUser(std::string NAME, int PIN, float DBALANCE, float CBALANCE, int ID){
+atmUser::atmUser(std::string NAME, int PIN, float CBALANCE, float SBALANCE, int ID){
     atmUser_Name = NAME;
     atmUser_PIN = PIN;
-    atmUser_DBalance = DBALANCE;
     atmUser_CBalance = CBALANCE;
+    atmUser_SBalance = SBALANCE;
     atmUser_ID = ID;
     ObjCounter++;
 };
@@ -36,7 +36,7 @@ atmUser::atmUser(const atmUser &obj){
     atmUser_Name = obj.atmUser_Name;
     atmUser_PIN = obj.atmUser_PIN;
     atmUser_ID = obj.atmUser_ID;
-    atmUser_DBalance = obj.atmUser_DBalance;
+    atmUser_SBalance = obj.atmUser_SBalance;
     atmUser_CBalance = obj.atmUser_CBalance;
 };
 
@@ -61,17 +61,17 @@ void atmUser::setName(std::string NAME){
     atmUser_Name = NAME;
 };
 
-float atmUser::getDebitBalance(){
-    return atmUser_DBalance;
+float atmUser::getSavingBalance(){
+    return atmUser_SBalance;
 };
-void atmUser::setDebitBalance(float BALANCE){
-    atmUser_DBalance = BALANCE;
+void atmUser::setSavingBalance(float BALANCE){
+    atmUser_SBalance = BALANCE;
 };
 
-float atmUser::getCreditBalance(){
+float atmUser::getCheckingBalance(){
     return atmUser_CBalance;
 };
-void atmUser::setCreditBalance(float BALANCE){
+void atmUser::setCheckingBalance(float BALANCE){
     atmUser_CBalance = BALANCE;
 };
 

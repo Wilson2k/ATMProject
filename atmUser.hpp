@@ -19,7 +19,7 @@ private:
     int atmUser_PIN;
     int atmUser_ID;
     float atmUser_CBalance;
-    float atmUser_DBalance;
+    float atmUser_SBalance;
     int ObjCounter;
     
 public:
@@ -27,23 +27,23 @@ public:
     atmUser();
     atmUser(std::string NAME);
     atmUser(std::string NAME, int PIN);
-    atmUser(std::string NAME, int PIN, float DBALANCE);
-    atmUser(std::string NAME, int PIN, float DBALANCE, float CBALANCE);
-    atmUser(std::string NAME, int PIN, float DBALANCE, float CBALANCE, int ID);
+    atmUser(std::string NAME, int PIN, float CBALANCE);
+    atmUser(std::string NAME, int PIN, float CBALANCE, float SBALANCE);
+    atmUser(std::string NAME, int PIN, float CBALANCE, float SBALANCE, int ID);
     
     atmUser(const atmUser &obj);
     
     int getPIN();
     int getID();
     std::string getName();
-    float getCreditBalance();
-    float getDebitBalance();
+    float getCheckingBalance();
+    float getSavingBalance();
     
     void setID(int ID);
     void setPIN(int PIN);
     void setName(std::string NAME);
-    void setCreditBalance(float BALANCE);
-    void setDebitBalance(float BALANCE);
+    void setCheckingBalance(float BALANCE);
+    void setSavingBalance(float BALANCE);
     
     int ObjCount();
     
