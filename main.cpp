@@ -14,13 +14,13 @@
 #include "atmUser.hpp"
 using namespace std;
 
-void displayAccountChoice(){
+void displayAccountChoice(){ // Display menu that asks for account choice
     cout << "Which account are you using?" << endl;
     cout << "[1] Checkings Account" << endl;
     cout << "[2] Savings Account" << endl;
 }
 
-void displayMainmenu(){ // Display the main menu after login/creating account
+void displayMainmenu(){ // Display the main menu after login/creating an account
     cout << "What would you like to do?" << endl;
     cout << "[1] Withdraw" << endl;
     cout << "[2] Deposit" << endl;
@@ -30,7 +30,7 @@ void displayMainmenu(){ // Display the main menu after login/creating account
     cout << "[6] Quit" << endl;
 }
 
-void displayWithdrawmenu(){ //Display withdraw menu when user chooses (1) Withdraw
+void displayWithdrawmenu(){ //Display withdraw menu when user chooses [1] Withdraw
     cout << "How much do you want to withdraw?" << endl;
     cout << "[1] $20" << endl;
     cout << "[2] $40" << endl;
@@ -40,11 +40,6 @@ void displayWithdrawmenu(){ //Display withdraw menu when user chooses (1) Withdr
     cout << "[6] $200" << endl;
     cout << "[7] $300" << endl;
     cout << "[8] Other Amount" << endl;
-}
-
-void additonalOptiions(){
-    cout << "[1] Change PIN" << endl;
-    cout << "[2] Nearby ATM Locations" << endl;
 }
 
 void displayNearby(){ // Displays nearby locations for [5] Other options
@@ -59,7 +54,7 @@ void displayNearby(){ // Displays nearby locations for [5] Other options
     cout << "BANK OF AMERICA ATM San Francisco Peninsula, San Francisco, CA 94128 - 7.7 Miles away" << endl;
 }
 
-void writeReceipt(){ // Call to ask user if they want receipt, and write receipt
+void writeReceipt(){ // Asks user if they want a receipt, and prints receipt if they do
     string line, receiptChoice;
     cout << "Would you like a receipt? (Y/N)" << endl;
     cin >> receiptChoice;
@@ -105,7 +100,7 @@ void saveData(atmUser currentUser){ // Updates stored data
     rename("temp.txt","atmData.txt");
 }
 
-atmUser getUser(string userName, int userID){ // returns an atmUser object with user data if it is found, if  no matching user data found then returns empty atmUser object
+atmUser getUser(string userName, int userID){ // returns an atmUser object with user data if it is found, if no matching user data found then returns empty atmUser object
     string storedName, line;
     int storedPIN, storedID;
     float storedSaving, storedChecking;
@@ -178,12 +173,12 @@ bool userExist(string userName, int userID){ // Checks if user exists in saved d
 }
 
 void transferMoney(atmUser &currentUser, atmUser &transferUser, float transferAmount, char account){ // Transfer money between two atmUser objects
-    if(account == '1'){
+    if(account == '1'){ // If account = 1, this means transfer will come from checkings balance
         currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transferAmount);
         transferUser.setCheckingBalance(transferUser.getCheckingBalance() + transferAmount);
         cout << "You successfully transferred $" << transferAmount << " to " << transferUser.getName() << " from checkings." << endl;
     }
-    else if(account == '2'){
+    else if(account == '2'){ // If account = 2, this means transfer will come from savings balance
         currentUser.setSavingBalance(currentUser.getSavingBalance() - transferAmount);
         transferUser.setCheckingBalance(transferUser.getCheckingBalance() + transferAmount);
         cout << "You successfully transferred $" << transferAmount << " to " << transferUser.getName() << " from savings." << endl;
@@ -200,20 +195,20 @@ char checkWithdrawChoice(char withdrawChoice){ // Checks that withdraw menu choi
     return withdrawChoice;
 }
 
-char checkUserResponse(char userResponse){ // Checks response to "Would you like another transaction? is valid"
-    while(!(userResponse == 'Y' || userResponse == 'y' || userResponse == 'N' || userResponse == 'n')){
+char checkAdditionalTrans(char response){ // Checks response to "Would you like another transaction? is valid"
+    while(!(response == 'Y' || response == 'y' || response == 'N' || response == 'n')){
         cout << "Please choose an option." << endl;
-        cin >> userResponse;
+        cin >> response;
     }
-    return userResponse;
+    return response;
 }
 
-char checkMainChoice(char userChoice){ // Checks that main menu choice is valid
-    while(!(userChoice == '1' || userChoice == '2' || userChoice == '3' || userChoice == '4' || userChoice == '5' || userChoice == '6')){
+char checkMainChoice(char mainChoice){ // Checks that main menu choice is valid
+    while(!(mainChoice == '1' || mainChoice == '2' || mainChoice == '3' || mainChoice == '4' || mainChoice == '5' || mainChoice == '6')){
         cout << "Please choose an option" << endl;
-        cin >> userChoice;
+        cin >> mainChoice;
     }
-    return userChoice;
+    return mainChoice;
 }
 
 char checkAccountChoice(char accountChoice){ // Checks response to checkings or savings menu
@@ -233,27 +228,27 @@ char checkTransferChoice(char transferChoice){ // Checks response to transfer me
 }
 
 void mainMenu(atmUser currentUser){
-    char userResponse = 'Y';
-    char userChoice = '0';
+    char anotherTransaction = 'Y';
+    char mainChoice = '0';
     char withdrawChoice = '0';
     char accountChoice = '0';
-    char transferOrPayment = '0';
     float transactionAmount = 0;
+    char transferChoice = '0';
     string transferRecipient = "";
-    int transferID = 0;
-    float transferAmount = 0;
-    string addChoice;
+    int transferRecipientID = 0;
+    string addChoice = "0";
+    
     displayMainmenu();
-    cin >> userChoice;
-    userChoice = checkMainChoice(userChoice);
-    ifstream atmReceipt ("atmReceipt.txt", ios::trunc);
+    cin >> mainChoice;
+    mainChoice = checkMainChoice(mainChoice);
+    ifstream atmReceipt ("atmReceipt.txt", ios::trunc); // Opens receipt file in trunc mode, clearing old data
     atmReceipt.close();
-    ofstream storeReceipt ("atmReceipt.txt");
+    ofstream storeReceipt ("atmReceipt.txt"); // Opens stream to write to clean receipt file
     if(storeReceipt.is_open()){
-        storeReceipt << "Name: " << currentUser.getName() << endl;
-        while(userResponse == 'Y' || userResponse == 'y'){
-            switch (userChoice) {
-                case '1': // [1] Withdraw option
+        storeReceipt << "Name: " << currentUser.getName() << endl; // Writes down users name at the top of  receipt
+        do {
+            switch (mainChoice) {
+                case '1': // -------------------------------------------------- [1] Withdraw option -------------------------------------------------- //
                     displayAccountChoice();
                     cin >>  accountChoice;
                     accountChoice = checkAccountChoice(accountChoice);
@@ -337,6 +332,9 @@ void mainMenu(atmUser currentUser){
                                 if(transactionAmount > currentUser.getCheckingBalance()){
                                     cout << "Not enough money to withdraw." << endl;
                                 }
+                                else if(transactionAmount > 1000){
+                                    cout << "Sorry, you cannot withdraw more than $1,000." << endl;
+                                }
                                 else{
                                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transactionAmount);
                                     cout << "You successfully withdrew $" << transactionAmount << endl;
@@ -347,7 +345,7 @@ void mainMenu(atmUser currentUser){
                                 withdrawChoice = checkWithdrawChoice(withdrawChoice);
                         }
                     }
-                    else if(accountChoice == '2'){
+                    else if(accountChoice == '2'){ // If user chooses to withdraw from savings account
                         displayWithdrawmenu();
                         cin >> withdrawChoice;
                         switch (withdrawChoice) {
@@ -438,15 +436,15 @@ void mainMenu(atmUser currentUser){
                         }
                     }
                     cout << "Would you like another transaction? (Y/N)" << endl;
-                    cin >> userResponse;
-                    userResponse = checkUserResponse(userResponse);
-                    if(userResponse == 'Y' || userResponse == 'y'){
+                    cin >> anotherTransaction;
+                    anotherTransaction = checkAdditionalTrans(anotherTransaction);
+                    if(anotherTransaction == 'Y' || anotherTransaction == 'y'){
                         displayMainmenu();
-                        cin >> userChoice;
-                        userChoice = checkMainChoice(userChoice);
+                        cin >> mainChoice;
+                        mainChoice = checkMainChoice(mainChoice);
                     }
                     break;
-                case '2': // [2] Deposit option
+                case '2': // -------------------------------------------------- [2] Deposit option -------------------------------------------------- //
                     displayAccountChoice();
                     cin >>  accountChoice;
                     accountChoice = checkAccountChoice(accountChoice);
@@ -473,15 +471,15 @@ void mainMenu(atmUser currentUser){
                         cout << "You successfully deposited $" << transactionAmount << " to savings." << endl;
                     }
                     cout << "Would you like another transaction? (Y/N)" << endl;
-                    cin >> userResponse;
-                    userResponse = checkUserResponse(userResponse);
-                    if(userResponse == 'Y' || userResponse == 'y'){
+                    cin >> anotherTransaction;
+                    anotherTransaction = checkAdditionalTrans(anotherTransaction);
+                    if(anotherTransaction == 'Y' || anotherTransaction == 'y'){
                         displayMainmenu();
-                        cin >> userChoice;
-                        userChoice = checkMainChoice(userChoice);
+                        cin >> mainChoice;
+                        mainChoice = checkMainChoice(mainChoice);
                     }
                     break;
-                case '3': // [3] Check Balance
+                case '3': // -------------------------------------------------- [3] Check Balance -------------------------------------------------- //
                     displayAccountChoice();
                     cin >> accountChoice;
                     accountChoice = checkAccountChoice(accountChoice);
@@ -492,49 +490,49 @@ void mainMenu(atmUser currentUser){
                         cout << "Your current saving balance is: " << "$" << currentUser.getSavingBalance() << endl;
                     }
                     cout << "Would you like another transaction? (Y/N)" << endl;
-                    cin >> userResponse;
-                    userResponse = checkUserResponse(userResponse);
-                    if(userResponse == 'Y' || userResponse == 'y'){
+                    cin >> anotherTransaction;
+                    anotherTransaction = checkAdditionalTrans(anotherTransaction);
+                    if(anotherTransaction == 'Y' || anotherTransaction == 'y'){
                         displayMainmenu();
-                        cin >> userChoice;
-                        userChoice = checkMainChoice(userChoice);
+                        cin >> mainChoice;
+                        mainChoice = checkMainChoice(mainChoice);
                     }
                     break;
-                case '4': // [4] Transfer or make payments
+                case '4': // -------------------------------------------------- [4] Transfer or make payments -------------------------------------------------- //
                     displayAccountChoice();
                     cin >> accountChoice;
                     accountChoice = checkAccountChoice(accountChoice);
                     if(accountChoice == '1'){
                         cout << "[1] Transfer money to savings" << endl;
                         cout << "[2] Make Payments" << endl;
-                        cin >> transferOrPayment;
-                        transferOrPayment = checkTransferChoice(transferOrPayment);
-                        if(transferOrPayment == '1'){
+                        cin >> transferChoice;
+                        transferChoice = checkTransferChoice(transferChoice);
+                        if(transferChoice == '1'){
                             cout << "Enter transfer amount: ";
-                            cin >>  transferAmount;
-                            if(transferAmount <= currentUser.getCheckingBalance() && transferAmount > 0){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transferAmount);
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() + transferAmount);
-                                cout << "You successfully transferred $" << transferAmount << " from checking to savings." << endl;
-                                storeReceipt << "Transfer from checkings to savings: $"  << transferAmount << endl;
+                            cin >>  transactionAmount;
+                            if(transactionAmount <= currentUser.getCheckingBalance() && transactionAmount > 0){
+                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transactionAmount);
+                                currentUser.setSavingBalance(currentUser.getSavingBalance() + transactionAmount);
+                                cout << "You successfully transferred $" << transactionAmount << " from checking to savings." << endl;
+                                storeReceipt << "Transfer from checkings to savings: $"  << transactionAmount << endl;
                             }
                             else{
                                 cout << "Invalid transfer amount." << endl;
                             }
                         }
-                        else if(transferOrPayment == '2'){
+                        else if(transferChoice == '2'){
                             cout << "Enter name of transfer recipient: ";
                             cin.ignore();
                             getline(cin, transferRecipient);
                             cout << "Enter recipient ID: ";
-                            cin >> transferID;
-                            if(userExist(transferRecipient, transferID)){
+                            cin >> transferRecipientID;
+                            if(userExist(transferRecipient, transferRecipientID)){
                                 cout << "Enter transfer amount: ";
-                                cin >> transferAmount;
-                                if(transferAmount <= currentUser.getCheckingBalance() && transferAmount > 0){
-                                    atmUser transferUser(getUser(transferRecipient, transferID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
-                                    transferMoney(currentUser, transferUser , transferAmount, accountChoice);
-                                    storeReceipt << "Transfer to " << transferUser.getName() << " from checking: $" << transferAmount << endl;
+                                cin >> transactionAmount;
+                                if(transactionAmount <= currentUser.getCheckingBalance() && transactionAmount > 0){
+                                    atmUser transferUser(getUser(transferRecipient, transferRecipientID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
+                                    transferMoney(currentUser, transferUser , transactionAmount, accountChoice);
+                                    storeReceipt << "Transfer to " << transferUser.getName() << " from checking: $" << transactionAmount << endl;
                                 }
                                 else{
                                     cout << "Invalid transfer amount." << endl;
@@ -545,34 +543,34 @@ void mainMenu(atmUser currentUser){
                     else if(accountChoice == '2'){
                         cout << "[1] Transfer money to checkings" << endl;
                         cout << "[2] Make Payments" << endl;
-                        cin >> transferOrPayment;
-                        transferOrPayment = checkTransferChoice(transferOrPayment);
-                        if(transferOrPayment == '1'){
+                        cin >> transferChoice;
+                        transferChoice = checkTransferChoice(transferChoice);
+                        if(transferChoice == '1'){
                             cout << "Enter transfer amount: ";
-                            cin >>  transferAmount;
-                            if(transferAmount <= currentUser.getSavingBalance() && transferAmount > 0){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - transferAmount);
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() + transferAmount);
-                                cout << "You successfully transferred $" << transferAmount << " from savings to checking." << endl;
-                                storeReceipt << "Transfer from savings to checkings: $"  << transferAmount << endl;
+                            cin >>  transactionAmount;
+                            if(transactionAmount <= currentUser.getSavingBalance() && transactionAmount > 0){
+                                currentUser.setSavingBalance(currentUser.getSavingBalance() - transactionAmount);
+                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() + transactionAmount);
+                                cout << "You successfully transferred $" << transactionAmount << " from savings to checking." << endl;
+                                storeReceipt << "Transfer from savings to checkings: $"  << transactionAmount << endl;
                             }
                             else{
                                 cout << "Invalid transfer amount." << endl;
                             }
                         }
-                        else if(transferOrPayment == '2'){
+                        else if(transferChoice == '2'){
                             cout << "Enter name of transfer recipient: ";
                             cin.ignore();
                             getline(cin, transferRecipient);
                             cout << "Enter recipient ID: ";
-                            cin >> transferID;
-                            if(userExist(transferRecipient, transferID)){
+                            cin >> transferRecipientID;
+                            if(userExist(transferRecipient, transferRecipientID)){
                                 cout << "Enter transfer amount: ";
-                                cin >> transferAmount;
-                                if(transferAmount <= currentUser.getSavingBalance() && transferAmount > 0){
-                                    atmUser transferUser(getUser(transferRecipient, transferID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
-                                    transferMoney(currentUser, transferUser , transferAmount, accountChoice);
-                                    storeReceipt << "Transfer to " << transferUser.getName() << " from saving: $" << transferAmount << endl;
+                                cin >> transactionAmount;
+                                if(transactionAmount <= currentUser.getSavingBalance() && transactionAmount > 0){
+                                    atmUser transferUser(getUser(transferRecipient, transferRecipientID)); // GetUser grabs transfer recipient data, and then we create a new atmUser object that is a clone of what GetUser grabs
+                                    transferMoney(currentUser, transferUser , transactionAmount, accountChoice);
+                                    storeReceipt << "Transfer to " << transferUser.getName() << " from saving: $" << transactionAmount << endl;
                                 }
                                 else{
                                     cout << "Invalid transfer amount." << endl;
@@ -581,17 +579,17 @@ void mainMenu(atmUser currentUser){
                         }
                     }
                     cout << "Would you like another transaction? (Y/N)" << endl;
-                    cin >> userResponse;
-                    userResponse = checkUserResponse(userResponse);
-                    if(userResponse == 'Y' || userResponse == 'y'){
+                    cin >> anotherTransaction;
+                    anotherTransaction = checkAdditionalTrans(anotherTransaction);
+                    if(anotherTransaction == 'Y' || anotherTransaction == 'y'){
                         displayMainmenu();
-                        cin >> userChoice;
-                        userChoice = checkMainChoice(userChoice);
+                        cin >> mainChoice;
+                        mainChoice = checkMainChoice(mainChoice);
                     }
                     break;
-                case '5': // [5] Other Options
-                    additonalOptiions();
-                    addChoice = "0";
+                case '5': // -------------------------------------------------- [5] Other Options -------------------------------------------------- //
+                    cout << "[1] Change PIN" << endl;
+                    cout << "[2] Nearby ATM Locations" << endl;
                     getline(cin, addChoice);
                     while(!(addChoice == "1" || addChoice == "2")){
                         cout << "Please enter a valid option: ";
@@ -599,7 +597,7 @@ void mainMenu(atmUser currentUser){
                     }
                     if(addChoice == "1"){
                         int newPIN;
-                        cout << "Choose a new PIN" << endl;
+                        cout << "Choose a new PIN:";
                         cin >> newPIN;
                         while(newPIN > 9999 || newPIN <= 999){
                             cout << "Invalid pin." << endl;
@@ -613,24 +611,26 @@ void mainMenu(atmUser currentUser){
                         displayNearby();
                     }
                     cout << "Would you like another transaction? (Y/N)" << endl;
-                    cin >> userResponse;
-                    userResponse = checkUserResponse(userResponse);
-                    if(userResponse == 'Y' || userResponse == 'y'){
+                    cin >> anotherTransaction;
+                    anotherTransaction = checkAdditionalTrans(anotherTransaction);
+                    if(anotherTransaction == 'Y' || anotherTransaction == 'y'){
                         displayMainmenu();
-                        cin >> userChoice;
-                        userChoice = checkMainChoice(userChoice);
+                        cin >> mainChoice;
+                        mainChoice = checkMainChoice(mainChoice);
                     }
                     break;
                 case '6': // Quit option
                     cout << "Thank you, have a good day." << endl;
-                    userResponse = '0';
+                    anotherTransaction = '0';
                     break;
             }
-        }
+        } while(anotherTransaction == 'Y' || anotherTransaction == 'y');
+
         storeReceipt << "Current Checking balance: $" << currentUser.getCheckingBalance() << endl;
         storeReceipt << "Current Saving balance: $" << currentUser.getSavingBalance() << endl;
         storeReceipt.close();
-        if(userResponse != '0'){
+        
+        if(anotherTransaction != '0'){
             writeReceipt();
         }
         saveData(currentUser);
@@ -669,7 +669,7 @@ void registerUser(){ //Creating a new user account
     }
 }
 
-void login(){
+void login(){ // Login function
     string userName, storedName, line;
     int userPIN, storedPIN, userID, storedID;
     float storedChecking, storedSaving;
@@ -709,7 +709,7 @@ void login(){
     }
 }
 
-void startMenu(){
+void startMenu(){ // Start menu, calls login or register function depending on user choice
     string startChoice = "0";
     cout << "What do you want to do?" << endl;
     cout << "[1] Login" << endl;
