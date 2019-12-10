@@ -94,7 +94,7 @@ void writeReceipt() { // Asks user if they want a receipt, and prints receipt if
         cout << "| [3] Print and Email Receipt |" << endl;
         cout << "|_____________________________|" << endl;
         cin >> receiptChoice;
-        if (receiptChoice == "1") {
+        if (receiptChoice == "1") { // Print Receipt only
             ifstream writeReceipt("atmReceipt.txt");
             if (writeReceipt.is_open()) {
                 cout << "-----------------------------------------" << endl;
@@ -104,12 +104,12 @@ void writeReceipt() { // Asks user if they want a receipt, and prints receipt if
                 cout << "-----------------------------------------" << endl;
             }
         }
-        if (receiptChoice == "2") {
+        if (receiptChoice == "2") { // Email receipt only
             cout << "Please enter your email address: ";
             cin >> userEmail;
             cout << "An email of your receipt has been sent to " << userEmail << endl;
         }
-        if (receiptChoice == "3") {
+        if (receiptChoice == "3") { // Print and email receipt
             ifstream writeReceipt("atmReceipt.txt");
             if (writeReceipt.is_open()) {
                 cout << "_________________________________________" << endl;
@@ -161,12 +161,12 @@ atmUser getUser(string userName, int userID) { // returns an atmUser object with
     {
         while (getline(atmData, line))
         {
-            stringstream currentline(line);
+            stringstream currentline(line); // Creates string stream to use getline on current line in file
             getline(currentline, storedName, '|');
-            currentline >> storedPIN >> storedChecking >> storedSaving >> storedID;
-            if (userName == storedName)
+            currentline >> storedPIN >> storedChecking >> storedSaving >> storedID; // Grabs rest of stored data
+            if (userName == storedName) // If name matches checks ID
             {
-                if (userID == storedID) {
+                if (userID == storedID) { // If ID matches as well, then sets the object's member variables equal to the stored data
                     targetUser.setID(storedID);
                     targetUser.setName(storedName);
                     targetUser.setPIN(storedPIN);
