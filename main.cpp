@@ -309,6 +309,10 @@ void mainMenu(atmUser& currentUser) {
                 displayAccountChoice();
                 cin >> accountChoice;
                 accountChoice = checkAccountChoice(accountChoice);
+                cout << " _________________________________" << endl;
+                cout << "|                                 |" << endl;
+                cout << "| Withdraw Limit: $2,000.00       |" << endl;
+                cout << "|_________________________________|" << endl;
                 if (accountChoice == '1') { // Withdraw from checkings accounts
                     displayWithdrawmenu();
                     cin >> withdrawChoice;
@@ -324,11 +328,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $20.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (20 + withdrawFee));
-                                cout << "You successfully withdrew $20.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $20.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((20+withdrawFee) <= currentUser.getCheckingBalance()){ // If using credit card, includes fees so user cant overdraw cash.
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (20 + withdrawFee));
+                                    cout << "You successfully withdrew $20.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $20.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '2': // $40 Withdraw
@@ -342,11 +351,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $40.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (40 + withdrawFee));
-                                cout << "You successfully withdrew $40.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $40.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((40+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (40 + withdrawFee));
+                                    cout << "You successfully withdrew $40.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $40.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '3': // $60 Withdraw
@@ -360,11 +374,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $60.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (60 + withdrawFee));
-                                cout << "You successfully withdrew $60.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $60.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((60+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (60 + withdrawFee));
+                                    cout << "You successfully withdrew $60.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $60.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '4': // $80 Withdraw
@@ -378,11 +397,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $80.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (80 + withdrawFee));
-                                cout << "You successfully withdrew $80.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $80.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((80+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (80 + withdrawFee));
+                                    cout << "You successfully withdrew $80.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $80.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '5': // $100 Withdraw
@@ -396,11 +420,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $100.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (100 + withdrawFee));
-                                cout << "You successfully withdrew $100.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $100.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((100+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (100 + withdrawFee));
+                                    cout << "You successfully withdrew $100.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $100.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '6': // $200 Withdraw
@@ -414,11 +443,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $200.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (200 + withdrawFee));
-                                cout << "You successfully withdrew $200.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $200.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((200+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (200 + withdrawFee));
+                                    cout << "You successfully withdrew $200.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $200.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '7': // $300 Withdraw
@@ -432,11 +466,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $300.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (300 + withdrawFee));
-                                cout << "You successfully withdrew $300.00 from checkings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $300.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((300+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (300 + withdrawFee));
+                                    cout << "You successfully withdrew $300.00 from checkings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $300.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '8': // Other Amount Withdraw
@@ -454,8 +493,8 @@ void mainMenu(atmUser& currentUser) {
                             if (transactionAmount > currentUser.getCheckingBalance()) {
                                 cout << "Not enough money to withdraw." << endl;
                             }
-                            else if (transactionAmount > 1000) {
-                                cout << "Sorry, you cannot withdraw more than $1,000." << endl;
+                            else if (transactionAmount > 2000) {
+                                cout << "Sorry, you cannot withdraw more than $2,000." << endl;
                             }
                             else if (cardType == '1'){
                                 currentUser.setCheckingBalance(currentUser.getCheckingBalance() - transactionAmount);
@@ -463,11 +502,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from checkings: $" << transactionAmount << endl;
                             }
                             else if (cardType == '2'){
-                                currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (transactionAmount + withdrawFee));
-                                cout << "You successfully withdrew $" << transactionAmount << " from checkings." << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from checkings: $" << transactionAmount << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((transactionAmount+withdrawFee) <= currentUser.getCheckingBalance()){
+                                    currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (transactionAmount + withdrawFee));
+                                    cout << "You successfully withdrew $" << transactionAmount << " from checkings." << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from checkings: $" << transactionAmount << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         default:
@@ -489,11 +533,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $20.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (20 + withdrawFee));
-                                cout << "You successfully withdrew $20.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $20.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((20+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (20 + withdrawFee));
+                                    cout << "You successfully withdrew $20.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $20.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '2': // $40 Withdraw
@@ -507,11 +556,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $40.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (40 + withdrawFee));
-                                cout << "You successfully withdrew $40.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $40.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((40+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (40 + withdrawFee));
+                                    cout << "You successfully withdrew $40.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $40.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '3': // $60 Withdraw
@@ -525,11 +579,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $60.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (60 + withdrawFee));
-                                cout << "You successfully withdrew $60.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $60.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((60+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (60 + withdrawFee));
+                                    cout << "You successfully withdrew $60.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $60.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '4': // $80 Withdraw
@@ -543,11 +602,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $80.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (80 + withdrawFee));
-                                cout << "You successfully withdrew $80.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $80.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((80+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (80 + withdrawFee));
+                                    cout << "You successfully withdrew $80.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $80.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '5': // $100 Withdraw
@@ -561,11 +625,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $100.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (100 + withdrawFee));
-                                cout << "You successfully withdrew $100.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $100.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((100+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (100 + withdrawFee));
+                                    cout << "You successfully withdrew $100.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $100.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '6': // $200 Withdraw
@@ -579,11 +648,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $200.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (200 + withdrawFee));
-                                cout << "You successfully withdrew $200.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $200.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((200+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (200 + withdrawFee));
+                                    cout << "You successfully withdrew $200.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $200.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '7': // $300 Withdraw
@@ -597,11 +671,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $300.00" << endl;
                             }
                             else if(cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (300 + withdrawFee));
-                                cout << "You successfully withdrew $300.00 from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $300.00" << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((300+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (300 + withdrawFee));
+                                    cout << "You successfully withdrew $300.00 from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $300.00" << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         case '8': // Other Amount Withdraw
@@ -619,8 +698,8 @@ void mainMenu(atmUser& currentUser) {
                             if (transactionAmount > currentUser.getSavingBalance()) {
                                 cout << "Not enough money to withdraw." << endl;
                             }
-                            else if (transactionAmount > 1000) {
-                                cout << "Sorry, you cannot withdraw more than $1,000." << endl;
+                            else if (transactionAmount > 2000) {
+                                cout << "Sorry, you cannot withdraw more than $2,000." << endl;
                             }
                             else if (cardType == '1'){
                                 currentUser.setSavingBalance(currentUser.getSavingBalance() - transactionAmount);
@@ -628,11 +707,16 @@ void mainMenu(atmUser& currentUser) {
                                 storeReceipt << "Withdraw from savings: $" << transactionAmount << endl;
                             }
                             else if (cardType == '2'){
-                                currentUser.setSavingBalance(currentUser.getSavingBalance() - (transactionAmount + withdrawFee));
-                                cout << "You successfully withdrew $" << transactionAmount << " from savings" << endl;
-                                cout << "Credit Card Fee: $" << withdrawFee << endl;
-                                storeReceipt << "Withdraw from savings: $" << transactionAmount << endl;
-                                storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                if((transactionAmount+withdrawFee) <= currentUser.getSavingBalance()){
+                                    currentUser.setSavingBalance(currentUser.getSavingBalance() - (transactionAmount + withdrawFee));
+                                    cout << "You successfully withdrew $" << transactionAmount << " from savings" << endl;
+                                    cout << "Credit Card Fee: $" << withdrawFee << endl;
+                                    storeReceipt << "Withdraw from savings: $" << transactionAmount << endl;
+                                    storeReceipt << "Withdraw Fee: $" << withdrawFee << endl;
+                                }
+                                else{
+                                    cout << "Not enough money to withdraw including $" << withdrawFee << " fee." << endl;
+                                }
                             }
                             break;
                         default:
@@ -652,10 +736,14 @@ void mainMenu(atmUser& currentUser) {
                 displayAccountChoice();
                 cin >> accountChoice;
                 accountChoice = checkAccountChoice(accountChoice);
+                cout << " _________________________________" << endl;
+                cout << "|                                 |" << endl;
+                cout << "| Deposit Limit: $5,000.00        |" << endl;
+                cout << "|_________________________________|" << endl;
                 if (accountChoice == '1') {
                     cout << "Enter an amount to deposit: ";
                     cin >> transactionAmount;
-                    while (transactionAmount < 0) {
+                    while (transactionAmount < 0 || transactionAmount > 5000) {
                         cout << "Please deposit a valid amount." << endl;
                         cin >> transactionAmount;
                     }
@@ -666,7 +754,7 @@ void mainMenu(atmUser& currentUser) {
                 else if (accountChoice == '2') {
                     cout << "Enter an amount to deposit: ";
                     cin >> transactionAmount;
-                    while (transactionAmount < 0) {
+                    while (transactionAmount < 0 || transactionAmount > 5000) {
                         cout << "Please deposit a valid amount." << endl;
                         cin >> transactionAmount;
                     }
@@ -910,6 +998,8 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
     cout << "| [1] Quick Withdraw             |" << endl;
     cout << "| [2] Main Menu                  |" << endl;
     cout << "| [3] Quit                       |" << endl;
+    cout << "|________________________________|" << endl;
+    cin.ignore();
     getline(cin, splashChoice);
     while (splashChoice > "3" || splashChoice < "1") { // Makes sure user chooses valid choice 1-3
         cout << "| Please choose a valid choice.  |" << endl;
@@ -920,9 +1010,10 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
         displayCardMenu();
         cin >> cardType;
         cardType = checkAccountChoice(cardType);
-        cout << " _______________________________" << endl;
-        cout << "| Choose an amount to withdraw. |" << endl;
-        if (currentUser.getCheckingBalance() >= 80) { // If user has at least 80 dollars, shows all quick withdraw options
+        cin.ignore();
+        if (currentUser.getCheckingBalance() >= (80+(80*0.05))) { // If user has at least 80 dollars + withdraw fee, shows all quick withdraw options
+            cout << " _______________________________" << endl;
+            cout << "| Choose an amount to withdraw. |" << endl;
             cout << "| [1] $20                       |" << endl;
             cout << "| [2] $40                       |" << endl;
             cout << "| [3] $60                       |" << endl;
@@ -992,19 +1083,19 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 }
             }
         }
-        else if (currentUser.getCheckingBalance() >= 60) { // If user has 60-80 dollars in checking, shows fewer options
-            cout << " __________________________________________________" << endl;
-            cout << "|                                                  |" << endl;
-            cout << "| [1] $20                                          |" << endl;
-            cout << "| [2] $40                                          |" << endl;
-            cout << "| [3] $60                                          |" << endl;
-            cout << "| [4] Main Menu                                    |" << endl;
-            cout << "| [5] Quit                                         |" << endl;
-            cout << "|                                                  |" << endl;
+        else if (currentUser.getCheckingBalance() >= (60+(60*0.05))) { // If user has 60 dollars + withdraw fee in checking, shows fewer options
+            cout << " _______________________________" << endl;
+            cout << "| Choose an amount to withdraw. |" << endl;
+            cout << "| [1] $20                       |" << endl;
+            cout << "| [2] $40                       |" << endl;
+            cout << "| [3] $60                       |" << endl;
+            cout << "| [4] Main Menu                 |" << endl;
+            cout << "| [5] Quit                      |" << endl;
+            cout << "|_______________________________|" << endl;
             getline(cin, withdrawChoice);
             while (!(withdrawChoice == "1" || withdrawChoice == "2" || withdrawChoice == "3" || withdrawChoice == "4" || withdrawChoice == "5")) {
-                cout << "| Please choose a valid option.                      |" << endl;
-                cout << "|____________________________________________________|" << endl;
+                cout << "| Please choose a valid option. |" << endl;
+                cout << "|_______________________________|" << endl;
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){
@@ -1054,18 +1145,18 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 }
             }
         }
-        else if (currentUser.getCheckingBalance() >= 40) {
-            cout << " __________________________________________________" << endl;
-            cout << "|                                                  |" << endl;
-            cout << "| [1] $20                                          |" << endl;
-            cout << "| [2] $40                                          |" << endl;
-            cout << "| [3] Main Menu                                    |" << endl;
-            cout << "| [4] Quit                                         |" << endl;
-            cout << "|                                                  |" << endl;
+        else if (currentUser.getCheckingBalance() >= (40+(40*0.05))) { // If user has 40 dollars + withdraw fee in checking, shows fewer options
+            cout << " _______________________________" << endl;
+            cout << "| Choose an amount to withdraw. |" << endl;
+            cout << "| [1] $20                       |" << endl;
+            cout << "| [2] $40                       |" << endl;
+            cout << "| [3] Main menu                 |" << endl;
+            cout << "| [4] Quit                      |" << endl;
+            cout << "|_______________________________|" << endl;
             getline(cin, withdrawChoice);
             while (!(withdrawChoice == "1" || withdrawChoice == "2" || withdrawChoice == "3" || withdrawChoice == "4")) {
-                cout << "| Please choose a valid option.                      |" << endl;
-                cout << "|____________________________________________________|" << endl;
+                cout << "| Please choose a valid option. |" << endl;
+                cout << "|_______________________________|" << endl;
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){
@@ -1106,17 +1197,17 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 }
             }
         }
-        else if (currentUser.getCheckingBalance() >= 20) {
-            cout << " __________________________________________________" << endl;
-            cout << "|                                                  |" << endl;
-            cout << "| [1] $20                                          |" << endl;
-            cout << "| [2] Main Menu                                    |" << endl;
-            cout << "| [3] Quit                                         |" << endl;
-            cout << "|                                                  |" << endl;
+        else if (currentUser.getCheckingBalance() >= (20+(20*0.05))) { // If user has 20 dollars + withdraw fee in checking, shows fewer options
+            cout << " _______________________________" << endl;
+            cout << "| Choose an amount to withdraw. |" << endl;
+            cout << "| [1] $20                       |" << endl;
+            cout << "| [2] Main menu                 |" << endl;
+            cout << "| [3] Quit                      |" << endl;
+            cout << "|_______________________________|" << endl;
             getline(cin, withdrawChoice);
             while (!(withdrawChoice == "1" || withdrawChoice == "2" || withdrawChoice == "3")) {
-                cout << "| Please choose a valid option.                      |" << endl;
-                cout << "|____________________________________________________|" << endl;
+                cout << "| Please choose a valid option. |" << endl;
+                cout << "|_______________________________|" << endl;
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){
@@ -1146,7 +1237,7 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 }
             }
         }
-        else {
+        else { // If user has less than 20 dollars + withdraw fee in checking, shows main menu or quit option
             cout << " __________________________________________________" << endl;
             cout << "|                                                  |" << endl;
             cout << "| Not enough money in checkings to quick withdraw. |" << endl;
@@ -1249,13 +1340,15 @@ void login() { // Login function
 }
 
 void startMenu() { // Start menu, calls login or register function depending on user choice
-    string startChoice = "0";
+    string startChoice = "1";
     cout << "_________________________________________" << endl;
+    cout << "|                                       |" << endl;
     cout << "|        What do you want to do?        |" << endl;
     cout << "| [1] Login                             |" << endl;
     cout << "| [2] Register                          |" << endl;
     cout << "| [3] Quit                              |" << endl;
-    cout << "|                                       |" << endl;
+    cout << "|_______________________________________|" << endl;
+    getline(cin, startChoice);
     while (startChoice > "3" || startChoice < "1") {
         cout << "| Please choose a valid choice.         |" << endl;
         cout << "|_______________________________________|" << endl;
