@@ -142,15 +142,15 @@ void displayAccountChoice() { // Display menu that asks for account choice
 void displayCardMenu(){ // Display menu that ask for card type
     cout << " _____________________________________" << endl;
     cout << "|                                     |" << endl;
-    cout << "| What kind of card are you using?    |" << endl;
-    cout << "| [1] Debit Card                      |" << endl;
-    cout << "| [2] Credit Card                     |" << endl;
-    cout << "|_____________________________________|" << endl;
-    cout << "|                                     |" << endl;
     cout << "| Credit Card Withdraw Fees           |" << endl;
     cout << "| Under $200: 5%                      |" << endl;
     cout << "| $200 to $500: 10%                   |" << endl;
     cout << "| $500 or more: 15%                   |" << endl;
+    cout << "|_____________________________________|" << endl;
+    cout << "|                                     |" << endl;
+    cout << "| What kind of card are you using?    |" << endl;
+    cout << "| [1] Debit Card                      |" << endl;
+    cout << "| [2] Credit Card                     |" << endl;
     cout << "|_____________________________________|" << endl;
 }
 
@@ -213,11 +213,11 @@ void writeReceipt() { // Asks user if they want a receipt, and prints receipt if
         if (receiptChoice == "1") {
             ifstream writeReceipt("atmReceipt.txt");
             if (writeReceipt.is_open()) {
-                cout << "_________________________________________" << endl;
+                cout << "-----------------------------------------" << endl;
                 while (getline(writeReceipt, line)) {
                     cout << line << endl;
                 }
-                cout << "_________________________________________" << endl;
+                cout << "-----------------------------------------" << endl;
             }
         }
         if (receiptChoice == "2") {
@@ -1335,12 +1335,12 @@ void login() { // Login function
     cout << "Enter ID: ";
     cin >> userID;
     ifstream atmData("atmData.txt");
-    if (atmData.is_open())
+    if (atmData.is_open()) // Opens saved data
     {
         while (getline(atmData, line))
         {
-            stringstream currentline(line);
-            getline(currentline, storedName, '|');
+            stringstream currentline(line); // Creats a string stream called currentline, that copies the current line (line) in file so we can read from it
+            getline(currentline, storedName, '|'); //
             currentline >> storedPIN >> storedChecking >> storedSaving >> storedID;
             if (userName == storedName && userPIN == storedPIN)
             {
