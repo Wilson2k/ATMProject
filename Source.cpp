@@ -305,7 +305,7 @@ atmUser getUser(string userName, int userID) { // returns an atmUser object with
     return targetUser;
 }
 
-bool userExist(string userName, int userID) { // Checks if user exists in saved data
+bool userExist(string userName, int userID) { // Checks if user exists in saved data returns true/false
     bool userStatus = false;
     string storedName, line;
     int storedPIN, storedID;
@@ -324,7 +324,7 @@ bool userExist(string userName, int userID) { // Checks if user exists in saved 
                     userStatus = true;
                     break;
                 }
-                else if (atmData.peek() == EOF) {
+                else if (atmData.peek() == EOF) { // End of file reached and user cant be found
                     cout << "Sorry, we couldn't find that user." << endl;
                     break;
                 }
@@ -1148,58 +1148,58 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){ // Debit Card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 20);
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // $40
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 40);
                     cout << "$40.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "3") {
+                else if (withdrawChoice == "3") { // $60
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 60);
                     cout << "$60.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "4") {
+                else if (withdrawChoice == "4") { // $80
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 80);
                     cout << "$80.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "5") {
+                else if (withdrawChoice == "5") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "6"){
+                else if(withdrawChoice == "6"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
             else if(cardType == '2'){ // Credit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     withdrawFee = 20*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (20 + withdrawFee));
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // $40
                     withdrawFee = 40*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (40 + withdrawFee));
                     cout << "$40.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "3") {
+                else if (withdrawChoice == "3") { // $60
                     withdrawFee = 60*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (60 + withdrawFee));
                     cout << "$60.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "4") {
+                else if (withdrawChoice == "4") { // $80
                     withdrawFee = 80*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (80 + withdrawFee));
                     cout << "$80.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "5") {
+                else if (withdrawChoice == "5") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "6"){
+                else if(withdrawChoice == "6"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
@@ -1220,48 +1220,48 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){ // Debit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 20);
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // $40
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 40);
                     cout << "$40.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "3") {
+                else if (withdrawChoice == "3") { //$60
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 60);
                     cout << "$60.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "4") {
+                else if (withdrawChoice == "4") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "5"){
+                else if(withdrawChoice == "5"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
             else if(cardType == '2'){ // Credit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     withdrawFee = 20*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (20 + withdrawFee));
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // $40
                     withdrawFee = 40*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (40 + withdrawFee));
                     cout << "$40.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "3") {
+                else if (withdrawChoice == "3") { // $60
                     withdrawFee = 60*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (60 + withdrawFee));
                     cout << "$60.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "4") {
+                else if (withdrawChoice == "4") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "5"){
+                else if(withdrawChoice == "5"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
@@ -1281,39 +1281,39 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){ // Debit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 20);
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // $40
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 40);
                     cout << "$40.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "3") {
+                else if (withdrawChoice == "3") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "4"){
+                else if(withdrawChoice == "4"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
             else if(cardType == '2'){ // Credit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     withdrawFee = 20*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (20 + withdrawFee));
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // $40
                     withdrawFee = 40*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (40 + withdrawFee));
                     cout << "$40.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
 
                 }
-                else if (withdrawChoice == "3") {
+                else if (withdrawChoice == "3") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "4"){
+                else if(withdrawChoice == "4"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
@@ -1332,28 +1332,28 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 getline(cin, withdrawChoice);
             }
             if(cardType == '1'){ // Debit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - 20);
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "3"){
+                else if(withdrawChoice == "3"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
             else if(cardType == '2'){ // Credit card
-                if (withdrawChoice == "1") {
+                if (withdrawChoice == "1") { // $20
                     withdrawFee = 20*0.05;
                     currentUser.setCheckingBalance(currentUser.getCheckingBalance() - (20 + withdrawFee));
                     cout << "$20.00 has been withdrawn from your checkings account." << endl;
                     cout << "Withdraw Fee: $" << withdrawFee << endl;
                 }
-                else if (withdrawChoice == "2") {
+                else if (withdrawChoice == "2") { // Main menu
                     mainMenu(currentUser);
                 }
-                else if(withdrawChoice == "3"){
+                else if(withdrawChoice == "3"){ // Quit
                     cout << "Thank you have a good day." << endl;
                 }
             }
@@ -1371,10 +1371,10 @@ void splashMenu(atmUser& currentUser) { // adds splash menu before main menu, al
                 cout << "|____________________________________________________|" << endl;
                 getline(cin, withdrawChoice);
             }
-            if (withdrawChoice == "1") {
+            if (withdrawChoice == "1") { // Main menu
                 mainMenu(currentUser);
             }
-            else if(withdrawChoice == "2"){
+            else if(withdrawChoice == "2"){ // Quit
                 cout << "Thank you have a good day." << endl;
             }
         }
@@ -1446,7 +1446,7 @@ void login() { // Login function
                     splashMenu(currentUser);
                     break;
                 }
-                else if (atmData.peek() == EOF) {
+                else if (atmData.peek() == EOF) { // If next character returns EOF flag, then entered data was not found and login fails.
                     cout << "Wrong username or password!" << endl;
                     break;
                 }
@@ -1475,15 +1475,15 @@ void startMenu() { // Start menu, calls login or register function depending on 
         cout << "|_______________________________________|" << endl;
         getline(cin, startChoice);
     }
-    if (startChoice == "1") {
+    if (startChoice == "1") { // Login
         login();
     }
-    if (startChoice == "2") {
+    if (startChoice == "2") { // Register
         registerUser();
         cin.ignore();
         startMenu();
     }
-    if (startChoice == "3") {
+    if (startChoice == "3") { // Quit
         cout << "Thank you, have a good day." << endl;
     }
 }
